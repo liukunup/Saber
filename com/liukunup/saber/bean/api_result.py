@@ -3,7 +3,8 @@
 
 import typing as t
 
-from com.liukunup.saber.bean import Code, Int, Float
+from com.liukunup.saber.bean.ret_code import Code
+from com.liukunup.saber.bean.custom_type import Int, Float
 
 
 class ApiResult(object):
@@ -40,7 +41,7 @@ class ApiResult(object):
         }
         if self.payload:
             response.update({"data": self.payload})
-        if self.payload:
+        if self.latency:
             response.update({"latency": self.latency})
         return response
 

@@ -3,7 +3,7 @@
 
 import typing as t
 
-from com.liukunup.saber.bean import Int
+from com.liukunup.saber.bean.custom_type import Int
 from enum import Enum, unique
 
 
