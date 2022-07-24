@@ -40,6 +40,7 @@ class DevelopmentConfig(AbstractConfig):
 
 class TestingConfig(AbstractConfig):
     """ 测试环境 """
+
     # 测试标识
     TESTING = True
     # 数据库参数
