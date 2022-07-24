@@ -6,7 +6,7 @@ from com.liukunup.saber.bean import CustomException
 
 api = Blueprint("api", __name__)
 
-from . import user
+from com.liukunup.saber.controller import user, demo
 
 
 @api.errorhandler(CustomException)
