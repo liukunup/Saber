@@ -13,7 +13,7 @@ from com.liukunup.saber.repository import User
 from com.liukunup.saber import db
 
 
-class Signature:
+class SignatureService:
     """ 签名校验 """
 
     # 分钟级过期时间

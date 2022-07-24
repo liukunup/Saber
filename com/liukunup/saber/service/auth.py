@@ -9,7 +9,7 @@ from com.liukunup.saber.repository import User
 from com.liukunup.saber import db
 
 
-class Authentication:
+class AuthenticateService:
     """ 鉴权注解类 """
 
     def __init__(self, perm):

@@ -32,6 +32,10 @@ class DevelopmentConfig(AbstractConfig):
     # 数据库链接
     SQLALCHEMY_DATABASE_URI = os.environ.get("DEV_DATABASE_URL") or \
         "sqlite:///" + os.path.join(basedir, "saber-dev.sqlite")
+    # MinIO
+    MINIO_USERNAME = None
+    MINIO_PASSWORD = None
+    MINIO_BUCKET = None
 
 
 class TestingConfig(AbstractConfig):
@@ -47,6 +51,10 @@ class TestingConfig(AbstractConfig):
     # 数据库链接
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/" \
                               f"{MYSQL_DATABASE}"
+    # MinIO
+    MINIO_USERNAME = os.environ.get("MINIO_USERNAME") or "username"
+    MINIO_PASSWORD = os.environ.get("MINIO_PASSWORD") or "password"
+    MINIO_BUCKET = os.environ.get("MINIO_BUCKET") or "bucket-testing"
 
 
 class GrayConfig(AbstractConfig):
@@ -61,6 +69,10 @@ class GrayConfig(AbstractConfig):
     # 数据库链接
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/" \
                               f"{MYSQL_DATABASE}"
+    # MinIO
+    MINIO_USERNAME = os.environ.get("MINIO_USERNAME") or "username"
+    MINIO_PASSWORD = os.environ.get("MINIO_PASSWORD") or "password"
+    MINIO_BUCKET = os.environ.get("MINIO_BUCKET") or "bucket-gray"
 
 
 class ProductionConfig(AbstractConfig):
@@ -75,6 +87,10 @@ class ProductionConfig(AbstractConfig):
     # 数据库链接
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/" \
                               f"{MYSQL_DATABASE}"
+    # MinIO
+    MINIO_USERNAME = os.environ.get("MINIO_USERNAME") or "username"
+    MINIO_PASSWORD = os.environ.get("MINIO_PASSWORD") or "password"
+    MINIO_BUCKET = os.environ.get("MINIO_BUCKET") or "bucket-prod"
 
 
 class DockerConfig(ProductionConfig):

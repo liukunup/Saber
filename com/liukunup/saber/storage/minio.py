@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# 服务: 数字资产
+# 服务: 对象存储
 # see http://docs.minio.org.cn/docs/master/python-client-api-reference
 
 import typing as t
@@ -8,8 +8,8 @@ from minio import Minio
 from .progress import Progress
 
 
-class Assets(object):
-    """ 数字资产 """
+class MinioService(object):
+    """ 对象存储 """
 
     # 客户端实例
     __client = None

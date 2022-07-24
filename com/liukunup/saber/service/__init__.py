@@ -6,12 +6,12 @@
 
 __all__ = ['audit', 'auth', 'sign', 'qps']
 
-from com.liukunup.saber.service.audit import Audit
-from com.liukunup.saber.service.auth import Authentication
-from com.liukunup.saber.service.sign import Signature
-from com.liukunup.saber.service.qps import QPS
+from com.liukunup.saber.service.audit import AuditService
+from com.liukunup.saber.service.auth import AuthenticateService
+from com.liukunup.saber.service.sign import SignatureService
+from com.liukunup.saber.service.qps import TokenBucketService
 
-audit = Audit
-auth = Authentication
-sign = Signature
-qps = QPS
+audit = AuditService
+auth = AuthenticateService
+sign = SignatureService
+qps = TokenBucketService

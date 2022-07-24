@@ -1,17 +1,21 @@
 # 基础镜像
 FROM python:3.9-alpine
 
-# FLASK框架配置
+# FLASK
 ENV FLASK_APP main.py
 ENV FLASK_CONFIG docker
-# 设置超级管理员
+# 超级管理员
 ENV SUPER_ADMIN Administrator
-# 数据库配置
+# 数据库
 ENV MYSQL_HOST 127.0.0.1
 ENV MYSQL_PORT 3306
-ENV MYSQL_USERNAME root
-ENV MYSQL_PASSWORD 123456
-ENV MYSQL_DATABASE db
+ENV MYSQL_USERNAME username
+ENV MYSQL_PASSWORD password
+ENV MYSQL_DATABASE saber
+# 对象存储
+ENV MINIO_USERNAME username
+ENV MINIO_PASSWORD password
+ENV MINIO_BUCKET saber
 
 # 专有用户
 RUN adduser -D flaskr

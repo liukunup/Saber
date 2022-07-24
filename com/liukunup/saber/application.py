@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
-# application
+# application.py
 
+# -------------------------------------------------------- env --------------------------------------------------------
 import os
 from dotenv import load_dotenv
 
@@ -9,6 +10,7 @@ if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
 
+# -------------------------------------------------------- app --------------------------------------------------------
 import click
 import unittest
 
@@ -20,6 +22,7 @@ app = create_app(os.getenv("FLASK_CONFIG") or "testing")
 migrate = Migrate(app, db)
 
 
+# -------------------------------------------------------- cli --------------------------------------------------------
 @app.cli.command()
 def deploy():
     """发布命令"""
@@ -28,7 +31,7 @@ def deploy():
     # 创建角色
     Role.insert_roles()
     # 创建超级管理员
-    User.add_super_admin(os.getenv("SUPER_ADMIN") or "Administrator", "This is a super administrator.", "Admin")
+    User.add_super_administrator(os.getenv("SUPER_ADMIN") or "Administrator", "This is a super administrator.", "Admin")
 
 
 @app.cli.command()

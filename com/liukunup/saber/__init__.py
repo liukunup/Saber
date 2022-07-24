@@ -1,5 +1,5 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
+# 创建应用
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy

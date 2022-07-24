@@ -5,7 +5,7 @@ from flask import jsonify, request, url_for
 from com.liukunup.saber.controller import api
 from com.liukunup.saber.service.user import UserService
 from com.liukunup.saber.bean import Success, Failed
-from com.liukunup.saber.service import sign, auth
+from com.liukunup.saber.service import sign, auth, audit
 from com.liukunup.saber.repository import Permission
 
 
@@ -21,6 +21,7 @@ def get_user(user_id):
 
 @api.route("/user", methods=["POST"])
 @sign()
+@audit()
 @auth(Permission.ADMIN)
 def add_user():
     user = UserService.insert(dat=request.json)
@@ -29,6 +30,7 @@ def add_user():
 
 @api.route("/user/<int:user_id>", methods=["DELETE"])
 @sign()
+@audit()
 @auth(Permission.ADMIN)
 def del_user(user_id):
     UserService.remove(user_id=user_id)

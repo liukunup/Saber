@@ -8,11 +8,9 @@ from datetime import datetime
 from flask import current_app, url_for
 from com.liukunup.saber.bean import Code, CustomException
 from com.liukunup.saber import db
-from enum import Enum, unique
 
 
-@unique
-class Permission(Enum):
+class Permission:
     """ 权限类型 """
     # 可读
     READ = 1
@@ -68,18 +66,18 @@ class Role(db.Model):
             db.session.add(role)
         db.session.commit()
 
-    def add(self, perm):
+    def add_permission(self, perm):
         if not self.has_permission(perm):
             self.permissions += perm
 
-    def remove(self, perm):
+    def remove_permission(self, perm):
         if self.has_permission(perm):
             self.permissions -= perm
 
-    def reset(self):
+    def reset_permissions(self):
         self.permissions = 0
 
-    def has(self, perm):
+    def has_permission(self, perm):
         return self.permissions & perm == perm
 
     def __repr__(self):
@@ -99,7 +97,7 @@ class User(db.Model):
     desc = db.Column(db.String(256), comment="描述")
     access_key = db.Column(db.String(32), comment="公钥", nullable=False, unique=True, index=True)
     secret_key = db.Column(db.String(32), comment="私钥", nullable=False)
-    role_id = db.Column(db.BigInteger, db.ForeignKey("role.id"))
+    role_id = db.Column(db.BigInteger, db.ForeignKey("role.id"), comment="角色ID")
     owner = db.Column(db.String(256), comment="所有者(工号或昵称)", nullable=False)
     is_enabled = db.Column(db.Boolean, comment="是否已被启用", nullable=False, default=False)
     audits = db.relationship("Audit", backref="user", lazy="dynamic")
@@ -141,7 +139,7 @@ class User(db.Model):
 
     def can(self, perm):
         """ 是否具备权限 """
-        return self.role is not None and self.role.has(perm)
+        return self.role is not None and self.role.has_permission(perm)
 
     def json(self):
         return {
@@ -177,9 +175,9 @@ class Audit(db.Model):
     # 表字段
     id = db.Column(db.BigInteger, comment="记录编号", primary_key=True)
     # ---------------------------------------------------- 业务字段 ----------------------------------------------------
-    user_id = db.Column(db.BigInteger, db.ForeignKey("user.id"))
+    user_id = db.Column(db.BigInteger, db.ForeignKey("user.id"), comment="用户ID")
     event = db.Column(db.String(256), comment="事件", nullable=False)
-    args = db.Column(db.Json, comment="参数")
+    args = db.Column(db.JSON, comment="参数")
     # ---------------------------------------------------- 业务字段 ----------------------------------------------------
     create_time = db.Column(db.DateTime(), comment="创建时间", default=datetime.utcnow)
     update_time = db.Column(db.DateTime(), comment="更新时间", default=datetime.utcnow, onupdate=datetime.utcnow)
