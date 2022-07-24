@@ -2,7 +2,7 @@
 FROM python:3.9-alpine
 
 # FLASK
-ENV FLASK_APP main.py
+ENV FLASK_APP com.liukunup.saber.application.py
 ENV FLASK_CONFIG docker
 # 超级管理员
 ENV SUPER_ADMIN Administrator
@@ -18,20 +18,21 @@ ENV MINIO_PASSWORD password
 ENV MINIO_BUCKET saber
 
 # 专有用户
-RUN adduser -D flaskr
-USER flaskr
+RUN adduser -D saber
+USER saber
 # 工作路径
-WORKDIR /home/flaskr
+WORKDIR /home/saber
 
 # 环境部署
 COPY requirements requirements
-RUN python -m venv venv
-RUN venv/bin/pip install -r requirements/docker.txt
+RUN python3 -m venv venv
+RUN venv/bin/python3 -m pip install --upgrade pip
+RUN venv/bin/pip install -r requirements/6_docker.txt
 
 # 拷贝源文件
-COPY app app
+COPY com com
 COPY migrations migrations
-COPY main.py run.sh ./
+COPY run.sh ./
 
 # 端口暴露
 EXPOSE 5000
