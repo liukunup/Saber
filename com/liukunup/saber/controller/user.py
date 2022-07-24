@@ -13,7 +13,7 @@ from com.liukunup.saber.repository import Permission
 @required_sign
 @required_perm(Permission.READ)
 @audit
-@rate_limiter
+@rate_limiter(tokens=3)
 def get_user(user_id):
     user = UserService.select(user_id=user_id)
     if user is None:

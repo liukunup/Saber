@@ -9,7 +9,7 @@ __all__ = ['audit', 'required_perm', 'required_admin', 'required_sign', 'rate_li
 from com.liukunup.saber.service.audit import AuditService
 from com.liukunup.saber.service.authenticate import AuthenticateService
 from com.liukunup.saber.service.signature import SignatureService
-from com.liukunup.saber.service.qps import TokenBucketService
+from com.liukunup.saber.service.token_bucket import TokenBucketService
 from com.liukunup.saber.repository import Permission
 
 
@@ -42,5 +42,5 @@ def rate_limiter(tokens=1):
     """ 流量控制 """
     # 双层装饰器
     def dual_layer_decorator(func):
-        return TokenBucketService(rate=5, capacity=10)(func, tokens)
+        return TokenBucketService(rate=5, capacity=30)(func, tokens)
     return dual_layer_decorator

@@ -5,6 +5,7 @@ import time
 import functools
 
 from com.liukunup.saber.bean import Int, Float
+from com.liukunup.saber.bean import Code, CustomException
 
 
 class TokenBucketService(object):
@@ -27,10 +28,10 @@ class TokenBucketService(object):
             cls._instance = super(TokenBucketService, cls).__new__(cls)
         return cls._instance
 
-    def consume(self, token_num: Int = 1):
+    def consume(self, tokens: Int = 1):
         """
         生产->消费
-        :param token_num: 消费数量
+        :param tokens: 消费数量
         :return: 是否消费成功
         """
         # 计算从上次消费到这次消费,所需新发放的令牌数量
@@ -38,12 +39,11 @@ class TokenBucketService(object):
         # 总令牌数不能超过桶容量
         self.__current_amount = min(increment + self.__current_amount, self.__capacity)
         # 判断所需消费的令牌数是否足够
-        if self.__current_amount < token_num:
-            return False
+        if self.__current_amount < tokens:
+            raise CustomException(e_code=Code.REQUEST_TOKEN, payload=f"Token不足,请降低请求频率.")
         # 可消费才会记录消费时间并执行
         self.__last_consume_time = int(time.time())
-        self.__current_amount -= token_num
-        return True
+        self.__current_amount -= tokens
 
     def __call__(self, func, tokens):
         """
@@ -56,7 +56,7 @@ class TokenBucketService(object):
 
         @functools.wraps(func)
         def decorator(*args, **kwargs):
-            consume_func(token_num=tokens)
+            consume_func(tokens=tokens)
             return func(*args, **kwargs)
 
         return decorator

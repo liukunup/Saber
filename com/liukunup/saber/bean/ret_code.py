@@ -42,3 +42,5 @@ class Code(Enum):
     REQUEST_EXPIRE = RetCode("请求已过期", 10011)
     REQUEST_DIFF_SIGN = RetCode("签名值不一致", 10012)
     REQUEST_NO_PERM = RetCode("不具备相关权限", 10013)
+    REQUEST_QPS = RetCode("请求过于频繁", 10014)
+    REQUEST_TOKEN = RetCode("请求过于频繁", 10015)
