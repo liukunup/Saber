@@ -7,7 +7,7 @@ import functools
 from com.liukunup.saber.bean import Int, Float
 
 
-class TokenBucketService:
+class TokenBucketService(object):
     """ 限流算法: 令牌桶服务 """
 
     def __init__(self, rate: Float, capacity: Int):
@@ -21,6 +21,11 @@ class TokenBucketService:
         self.__current_amount = 0
         # 上次消费时间
         self.__last_consume_time = int(time.time())
+
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, '_instance'):
+            cls._instance = super(TokenBucketService, cls).__new__(cls)
+        return cls._instance
 
     def consume(self, token_num: Int = 1):
         """
@@ -40,7 +45,7 @@ class TokenBucketService:
         self.__current_amount -= token_num
         return True
 
-    def __call__(self, func):
+    def __call__(self, func, tokens):
         """
         通过函数装饰器进行
         :param func: 函数
@@ -51,7 +56,7 @@ class TokenBucketService:
 
         @functools.wraps(func)
         def decorator(*args, **kwargs):
-            consume_func()
+            consume_func(token_num=tokens)
             return func(*args, **kwargs)
 
         return decorator

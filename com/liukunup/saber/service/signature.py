@@ -70,8 +70,8 @@ class SignatureService:
                                   payload="[X-Signature 配置错误] 签名方法请参考 README.md 文档.")
         # 服务端计算签名值
         local_signature = self.signature_calculate(user.access_key, user.secret_key,
-                                                   request.args,
-                                                   request.headers,
+                                                   dict(request.args),
+                                                   dict(request.headers),
                                                    request.data)
         # 校验签名是否一致
         signature = headers["X-Signature"]

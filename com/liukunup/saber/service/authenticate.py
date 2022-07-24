@@ -12,22 +12,19 @@ from com.liukunup.saber import db
 class AuthenticateService:
     """ 鉴权注解类 """
 
-    def __init__(self, perm):
-        self.permission = perm
-
-    def __call__(self, func):
+    def __call__(self, func, perm):
         """
         通过函数装饰器进行签名校验
         :param func: 函数
+        :param perm: 权限
         :return: 装饰器对象
         """
-        # 签名校验函数
+        # 权限校验函数
         verify_func = self.permission_verify
-        perm_arg = self.permission
 
         @functools.wraps(func)
         def decorator(*args, **kwargs):
-            verify_func(perm_arg)
+            verify_func(perm)
             return func(*args, **kwargs)
 
         return decorator
