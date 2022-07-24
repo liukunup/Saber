@@ -40,5 +40,5 @@ def test(test_names):
     if test_names:
         tests = unittest.TestLoader().loadTestsFromNames(test_names)
     else:
-        tests = unittest.TestLoader().discover('tests')
+        tests = unittest.TestLoader().discover("com.liukunup.saber.tests")
     unittest.TextTestRunner(verbosity=2).run(tests)

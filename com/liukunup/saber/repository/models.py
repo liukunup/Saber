@@ -110,7 +110,7 @@ class User(db.Model):
         # 检查是否已存在超级管理员
         for user in User.query.all():
             if user.name == name:
-                raise CustomException(e_code=Code.ADMIN_EXIST)
+                print("Warning: 超级管理员已存在!")
         # 创建超级管理员
         user = User(name=name, desc=desc, owner=owner, is_enabled=True)
         db.session.add(user)
